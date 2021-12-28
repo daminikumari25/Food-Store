@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+    <!-- ***** Call to Action Start ***** -->
+    <section class="section section-bg" id="call-to-action" style="background-image: url(static/images/banner-image-1-1920x500.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <h2>Our <em>Products</em></h2>
+                        <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Call to Action End ***** -->
+
+    <!-- ***** Fleet Starts ***** -->
+    <section class="section" id="trainers">
+        <div class="container">
+            <br>
+            <br>
+            <div class="row">
+                {% for i in Products %}
+                <div class="col-lg-4">
+                    <div class="trainer-item">
+                        <div class="image-thumb">
+                            <img src="/static/{{ i.image }}" alt="">
+                        </div>
+                        <div class="down-content">
+                            <span>
+                                <sup>₹</sup>{{ i.price }}
+                            </span>
+
+                            <h4>{{ i.productname }}</h4>
+
+                            <p>{{ i.description }}</p>
+
+                            <ul class="social-icons">
+                                <li><a href="/product-details/{{i.id}}">+ Order</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+                
+            <nav>
+                {% if Products.has_other_pages %}
+                <ul class="pagination">
+                  {% if Products.has_previous %}
+                    <li><a href="?page={{ Products.previous_page_number }}">&laquo&nbsp;</a></li>
+                  {% else %}
+                    <li class="disabled"><span>&laquo&nbsp;</span></li>
+                  {% endif %}
+                  {% for i in Products.paginator.page_range %}
+                    {% if Products.number == i %}
+                      <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                      <li><a href="?page={{ i }}">&nbsp&nbsp{{ i }}&nbsp&nbsp</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if Products.has_next %}
+                    <li><a href="?page={{ Products.next_page_number }}">&nbsp&raquo;</a></li>
+                  {% else %}
+                    <li class="disabled"><span>&nbsp&raquo;</span></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+            </nav>
+
+        </div>
+    </section>
+    <!-- ***** Fleet Ends ***** -->
+
+    
+{% endblock %}
